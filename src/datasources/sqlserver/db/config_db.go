@@ -1,24 +1,23 @@
-package db
-
+package sqlserver
 
 import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"log"
-
 	_ "github.com/denisenkom/go-mssqldb"
+	"log"
 )
 
 var (
-	debug         = flag.Bool("debug", false, "enable debugging")
+	Client *sql.DB
+	debug         = flag.Bool("debug", true, "enable debugging")
 	password      = flag.String("password", "Perang6021fq", "the database password")
 	port     *int = flag.Int("port", 1433, "the database port")
 	server        = flag.String("server", "MNASRUUL\\MNASRUUL", "the database server")
 	user          = flag.String("user", "sa", "the database user")
 )
 
-func init() {
+func Init() {
 	flag.Parse()
 
 	if *debug {
@@ -32,27 +31,37 @@ func init() {
 	if *debug {
 		fmt.Printf(" connString:%s\n", connString)
 	}
-	conn, err := sql.Open("mssql", connString)
+	Client, err := sql.Open("mssql", connString)
+
+	if err != nil {
+		panic(err)
+	}
+	if err = Client.Ping(); err != nil {
+		panic(err)
+	}
+
+	//mssql.SetLogger(logger.GetLogger())
+	log.Println("database successfully configured")
 	if err != nil {
 		log.Fatal("Open connection failed:", err.Error())
 	}
-	defer conn.Close()
+	//defer Client.Close()
 
-	stmt, err := conn.Prepare("select 1, 'abc'")
-	if err != nil {
-		log.Fatal("Prepare failed:", err.Error())
-	}
-	defer stmt.Close()
-
-	row := stmt.QueryRow()
-	var somenumber int64
-	var somechars string
-	err = row.Scan(&somenumber, &somechars)
-	if err != nil {
-		log.Fatal("Scan failed:", err.Error())
-	}
-	fmt.Printf("somenumber:%d\n", somenumber)
-	fmt.Printf("somechars:%s\n", somechars)
-
-	fmt.Printf("bye\n")
+	//stmt, err := conn.Prepare("select 1, 'abc'")
+	//if err != nil {
+	//	log.Fatal("Prepare failed:", err.Error())
+	//}
+	//defer stmt.Close()
+	//
+	//row := stmt.QueryRow()
+	//var somenumber int64
+	//var somechars string
+	//err = row.Scan(&somenumber, &somechars)
+	//if err != nil {
+	//	log.Fatal("Scan failed:", err.Error())
+	//}
+	//fmt.Printf("somenumber:%d\n", somenumber)
+	//fmt.Printf("somechars:%s\n", somechars)
+	//
+	//fmt.Printf("bye\n")
 }
