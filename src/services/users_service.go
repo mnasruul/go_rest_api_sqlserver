@@ -3,7 +3,6 @@ package services
 import (
 	"github.com/mnasruul/bookstore_oauth-go/rest_errors"
 	"github.com/mnasruul/go_rest_api_sqlserver/src/domain/users"
-	"log"
 )
 
 var (
@@ -11,7 +10,7 @@ var (
 )
 
 type usersServiceInterface interface {
-	GetUser(int64) (*users.User, rest_errors.RestErr)
+	GetUser() (users.Users, rest_errors.RestErr)
 	//CreateUser(users.User) (*users.User, rest_errors.RestErr)
 	//UpdateUser(bool, users.User) (*users.User, rest_errors.RestErr)
 	//DeleteUser(int64) rest_errors.RestErr
@@ -20,12 +19,7 @@ type usersServiceInterface interface {
 }
 type usersService struct{}
 
-func (s *usersService) GetUser(userId int64) (*users.User, rest_errors.RestErr) {
-	log.Println(userId)
-	dao := &users.User{UserId: userId}
-	log.Println(dao)
-	if err := dao.Get(); err != nil {
-		return nil, err
-	}
-	return dao, nil
+func (s *usersService) GetUser() (users.Users, rest_errors.RestErr) {
+	dao := &users.User{}
+	return dao.Get()
 }

@@ -1,14 +1,12 @@
 package controllers
 
 import (
-	"github.com/gorilla/mux"
 	"github.com/mnasruul/bookstore_items-api/src/utils/http_utils"
 	"github.com/mnasruul/bookstore_oauth-go/rest_errors"
 	"github.com/mnasruul/go_rest_api_sqlserver/src/services"
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 var (
@@ -31,17 +29,17 @@ func getUserId(userIdParam string) (int64, rest_errors.RestErr) {
 	return userId, nil
 }
 func (cont *usersController) Get(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	log.Println(vars["user_id"])
-	userId, idErr := getUserId(strings.TrimSpace(vars["user_id"]))
-	log.Println(userId)
-	if idErr != nil {
-		http_utils.RespondError(w, idErr)
-		return
-	}
-	user, err := services.UsersService.GetUser(userId)
-	log.Println(user)
+	//vars := mux.Vars(r)
+	//userId, idErr := getUserId(strings.TrimSpace(vars["user_id"]))
+	//if idErr != nil {
+	//	log.Println("Controller idErr",idErr)
+	//	http_utils.RespondError(w, idErr)
+	//	return
+	//}
+	user, err := services.UsersService.GetUser()
+	//log.Println(user)
 	if err != nil {
+		log.Println("Controller Get Err ",err)
 		http_utils.RespondError(w, err)
 		return
 	}
