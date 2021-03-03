@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	mssqlServer			= "mssqlServer"
-	mssqlPort			= "mssqlPort"
-	mssqlUsername 		= "mssqlUsername"
-	mssqlPassword 		= "mssqlPassword"
+	mssqlServer   = "mssqlServer"
+	mssqlPort     = "mssqlPort"
+	mssqlUsername = "mssqlUsername"
+	mssqlPassword = "mssqlPassword"
 )
 
 var (
@@ -25,12 +25,14 @@ var (
 	port     *int = flag.Int("port", 1433, "the database port")
 	server        = flag.String("server", os.Getenv(mssqlServer), "the database server")
 	user          = flag.String("user", os.Getenv(mssqlUsername), "the database user")
-	database          = flag.String("database", "db_users", "the database name")
+	database      = flag.String("database", "db_users", "the database name")
 )
+
 type UserS struct {
 	UserId   int64
 	UserName string
 }
+
 func init() {
 	flag.Parse()
 

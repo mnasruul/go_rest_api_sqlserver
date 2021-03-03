@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/mnasruul/bookstore_oauth-go/rest_errors"
+	"github.com/mnasruul/bookstore_utils-go/rest_errors"
 	"github.com/mnasruul/go_rest_api_sqlserver/src/domain/users"
 )
 

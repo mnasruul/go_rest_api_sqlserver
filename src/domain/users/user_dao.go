@@ -2,8 +2,8 @@ package users
 
 import (
 	"errors"
-	"github.com/mnasruul/bookstore_oauth-go/rest_errors"
 	"github.com/mnasruul/bookstore_utils-go/logger"
+	"github.com/mnasruul/bookstore_utils-go/rest_errors"
 	"github.com/mnasruul/go_rest_api_sqlserver/src/datasources/sqlserver/users_db"
 )
 
@@ -25,15 +25,15 @@ func (user *User) Get() ([]User, rest_errors.RestErr) {
 	defer rows.Close()
 
 	//rows:= stmt.Query()
-	result := make([]User,0)
+	result := make([]User, 0)
 	for rows.Next() {
 		var user User
 		if getErr := rows.Scan(&user.UserId, &user.UserName); getErr != nil {
 			logger.Error("error when trying to get user by id", getErr)
 			return nil, rest_errors.NewInternalServerError("error when tying to get user", errors.New("database error"))
 		}
-		result = append(result,user)
+		result = append(result, user)
 	}
 
-	return result ,nil
+	return result, nil
 }

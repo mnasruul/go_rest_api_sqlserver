@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/mnasruul/bookstore_items-api/src/utils/http_utils"
-	"github.com/mnasruul/bookstore_oauth-go/rest_errors"
+	"github.com/mnasruul/bookstore_utils-go/rest_errors"
 	"github.com/mnasruul/go_rest_api_sqlserver/src/services"
 	"log"
 	"net/http"
@@ -19,7 +19,7 @@ type usersControllerInterface interface {
 	//Search(w http.ResponseWriter, r *http.Request)
 }
 
-type usersController struct {}
+type usersController struct{}
 
 func getUserId(userIdParam string) (int64, rest_errors.RestErr) {
 	userId, userErr := strconv.ParseInt(userIdParam, 10, 64)
@@ -39,7 +39,7 @@ func (cont *usersController) Get(w http.ResponseWriter, r *http.Request) {
 	user, err := services.UsersService.GetUser()
 	//log.Println(user)
 	if err != nil {
-		log.Println("Controller Get Err ",err)
+		log.Println("Controller Get Err ", err)
 		http_utils.RespondError(w, err)
 		return
 	}
